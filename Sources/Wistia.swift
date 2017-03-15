@@ -1,4 +1,1 @@
-struct Wistia {
-
-    var text = "Hello, World!"
-}
+struct Wistia { }
