@@ -3,11 +3,11 @@ import Foundation
 extension Wistia {
     public struct Media {
         
-        let hashedId: String
-        let name: String
-        let description: String
+        public let hashedId: String
+        public let name: String
+        public let description: String
         
-        let assets: [Asset]
+        public let assets: [Asset]
         
         public struct Asset {
             let url: String
@@ -20,7 +20,7 @@ extension Wistia {
     }
 }
 
-extension Wistia.Media {
+extension Wistia.Media: JSONSerializable {
     public init?(json: JSONDictionary) {
         guard let hashedId = json["hashedId"] as? String ?? json["hashed_id"] as? String,
             let name = json["name"] as? String,
@@ -37,7 +37,7 @@ extension Wistia.Media {
     }
 }
 
-extension Wistia.Media.Asset {
+extension Wistia.Media.Asset: JSONSerializable {
     public init?(json: JSONDictionary) {
         guard let url = json["url"] as? String,
             let contentType = json["contentType"] as? String,

@@ -11,7 +11,7 @@ extension Wistia {
     
     public enum Route: APIRepresentable {
         
-        static let baseURL = URL(string: "https://api.wistia.com/v1")!
+        public static let baseURL = URL(string: "https://api.wistia.com/v1")!
         
         case project(String)
         case projects
@@ -21,7 +21,7 @@ extension Wistia {
         
         case account
         
-        var path: String {
+        public var path: String {
             
             switch self {
                 
