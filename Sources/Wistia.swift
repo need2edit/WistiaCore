@@ -1,4 +1,4 @@
-struct WistiaCore {
+struct Wistia {
 
     var text = "Hello, World!"
 }
