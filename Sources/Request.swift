@@ -23,7 +23,7 @@ extension Wistia {
          */
         public enum SortBy: String {
             /// Sort by name of the objects.
-            case name = "name"
+            case name
             
             /// Sort the MediaCount property of the objects.
             case mediaCount
