@@ -30,14 +30,14 @@ extension Wistia.Project {
 
 extension Wistia.Project {
     
-    static var list: Resource<[Wistia.Project]> {
+    internal static var list: Resource<[Wistia.Project]> {
         return try! Resource<[Wistia.Project]>(
             url: URL(route: .projects),
             parseElement: Wistia.Project.init
         )
     }
     
-    func show(hashedId: String) -> Resource<Wistia.Project> {
+    internal func show(hashedId: String) -> Resource<Wistia.Project> {
         return try! Resource<Wistia.Project>(url: URL(route: .project(hashedId)), method: .get, parseJSON: { json -> Wistia.Project? in
             if let json = json as? JSONDictionary {
             return Wistia.Project(json: json)
