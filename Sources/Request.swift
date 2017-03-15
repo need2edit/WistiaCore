@@ -97,17 +97,3 @@ extension Wistia {
     }
     
 }
-
-extension URL {
-    init(route: Wistia.Route) {
-        self = Wistia.Route.baseURL.appendingPathComponent(route.path)
-    }
-}
-
-extension URLRequest {
-    
-    init(request: Wistia.Request) {
-        self.init(url: request.url)
-    }
-    
-}

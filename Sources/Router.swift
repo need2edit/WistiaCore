@@ -13,10 +13,10 @@ extension Wistia {
         
         static let baseURL = URL(string: "https://api.wistia.com/v1")!
         
-        case project
+        case project(String)
         case projects
         
-        case media
+        case media(String)
         case medias
         
         case account

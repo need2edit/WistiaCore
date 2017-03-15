@@ -1,3 +1,5 @@
+import Foundation
+
 extension Wistia {
     public struct Media {
         
@@ -49,4 +51,12 @@ extension Wistia.Media.Asset {
         self.width = width
         self.height = height
     }
+}
+
+
+extension Wistia.Media {
+    static var list = try! Resource<[Wistia.Media]>(
+        url: URL(route: .medias),
+        parseElement: Wistia.Media.init
+    )
 }

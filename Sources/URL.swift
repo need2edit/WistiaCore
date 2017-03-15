@@ -8,6 +8,20 @@
 
 import Foundation
 
+extension URL {
+    internal init(route: Wistia.Route) {
+        self = Wistia.Route.baseURL.appendingPathComponent(route.path)
+    }
+}
+
+extension URLRequest {
+    
+    internal init(request: Wistia.Request) {
+        self.init(url: request.url)
+    }
+    
+}
+
 protocol URLQueryParameterStringConvertible {
     var queryParameters: String {get}
 }

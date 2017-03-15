@@ -1,3 +1,5 @@
+import Foundation
+
 extension Wistia {
     public struct Project {
         
@@ -24,4 +26,25 @@ extension Wistia.Project {
         
         self.medias = medias
     }
+}
+
+extension Wistia.Project {
+    
+    static var list: Resource<[Wistia.Project]> {
+        return try! Resource<[Wistia.Project]>(
+            url: URL(route: .projects),
+            parseElement: Wistia.Project.init
+        )
+    }
+    
+    func show(hashedId: String) -> Resource<Wistia.Project> {
+        return try! Resource<Wistia.Project>(url: URL(route: .project(hashedId)), method: .get, parseJSON: { json -> Wistia.Project? in
+            if let json = json as? JSONDictionary {
+            return Wistia.Project(json: json)
+            } else {
+            return nil
+            }
+        })
+    }
+    
 }
