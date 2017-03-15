@@ -59,4 +59,14 @@ extension Wistia.Media {
         url: URL(route: .medias),
         parseElement: Wistia.Media.init
     )
+    
+    func show(hashedId: String) -> Resource<Wistia.Media> {
+        return try! Resource<Wistia.Media>(url: URL(route: .media(hashedId)), method: .get, parseJSON: { json -> Wistia.Media? in
+            if let json = json as? JSONDictionary {
+                return Wistia.Media(json: json)
+            } else {
+                return nil
+            }
+        })
+    }
 }
