@@ -7,6 +7,8 @@ extension Wistia {
         public let name: String
         public let description: String
         
+        public let section: String?
+        
         public let assets: [Asset]
         
         public struct Asset {
@@ -34,6 +36,8 @@ extension Wistia.Media: JSONSerializable {
         let assets = assetInfo.flatMap { Asset(json: $0) }
         
         self.assets = assets
+        
+        self.section = json["section"] as? String
     }
 }
 

@@ -14,7 +14,7 @@ extension Wistia {
 
 extension Wistia.Project: JSONSerializable {
     public init?(json: JSONDictionary) {
-        guard let hashedId = json["hashedId"] as? String,
+        guard let hashedId = json["hashedId"] as? String ?? json["hashed_Id"] as? String,
             let name = json["name"] as? String,
             let description = json["description"] as? String,
             let mediaCount = json["mediaCount"] as? Int
@@ -40,12 +40,22 @@ extension Wistia.Project {
         )
     }
     
-    internal func show(hashedId: String) -> Resource<Wistia.Project> {
+    internal static func show(hashedId: String) -> Resource<Wistia.Project> {
         return try! Resource<Wistia.Project>(url: URL(route: .project(hashedId)), method: .get, parseJSON: { json -> Wistia.Project? in
             if let json = json as? JSONDictionary {
             return Wistia.Project(json: json)
             } else {
             return nil
+            }
+        })
+    }
+    
+    internal var details: Resource<Wistia.Project> {
+        return try! Resource<Wistia.Project>(url: URL(route: .project(self.hashedId)), method: .get, parseJSON: { json -> Wistia.Project? in
+            if let json = json as? JSONDictionary {
+                return Wistia.Project(json: json)
+            } else {
+                return nil
             }
         })
     }

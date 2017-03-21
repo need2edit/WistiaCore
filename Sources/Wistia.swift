@@ -1,6 +1,8 @@
 public typealias ProjectListHandler = ([Wistia.Project]) -> ()
 public typealias MediaListHandler = ([Wistia.Media]) -> ()
 public typealias AccountHandler = (Wistia.Account) -> ()
+public typealias ProjectHandler = (Wistia.Project) -> ()
+public typealias MediaHandler = (Wistia.Media) -> ()
 
 public struct Wistia {
 
@@ -25,6 +27,16 @@ public struct Wistia {
         
     public func listProjects(complete: @escaping ProjectListHandler) {
         load(resource: Project.list, complete: complete)
+    }
+    
+    public func showProject(forHashedId hashedId: String, complete: @escaping ProjectHandler) {
+        load(resource: Project.show(hashedId: hashedId), complete: complete)
+    }
+    
+    public func listMedias(forProject project: Project, complete: @escaping MediaListHandler) {
+        load(resource: project.details) { project in
+            complete(project.medias ?? [])
+        }
     }
     
     public func listMedias(complete: @escaping MediaListHandler) {
