@@ -12,11 +12,12 @@ extension Wistia {
         public let assets: [Asset]
         
         public struct Asset {
-            let url: String
-            let contentType: String
-            let type: String
-            let width: Int
-            let height: Int
+            public let url: String
+            public let contentType: String
+            public let type: String
+            public let width: Int
+            public let height: Int
+            public let fileSize: Int64
         }
         
     }
@@ -43,10 +44,13 @@ extension Wistia.Media: JSONSerializable {
 
 extension Wistia.Media.Asset: JSONSerializable {
     public init?(json: JSONDictionary) {
+        print(json.keys)
         guard let url = json["url"] as? String,
             let contentType = json["contentType"] as? String,
             let type = json["type"] as? String,
             let width = json["width"] as? Int,
+            
+            let fileSize = json["fileSize"] as? Int64,
             let height = json["height"] as? Int
             else { return nil }
         self.url = url
@@ -54,6 +58,7 @@ extension Wistia.Media.Asset: JSONSerializable {
         self.contentType = contentType
         self.width = width
         self.height = height
+        self.fileSize = fileSize
     }
 }
 
@@ -65,7 +70,7 @@ extension Wistia.Media {
         parseElement: Wistia.Media.init
     )
     
-    internal func show(hashedId: String) -> Resource<Wistia.Media> {
+    internal static func show(hashedId: String) -> Resource<Wistia.Media> {
         return try! Resource<Wistia.Media>(url: URL(route: .media(hashedId)), method: .get, parseJSON: { json -> Wistia.Media? in
             if let json = json as? JSONDictionary {
                 return Wistia.Media(json: json)
@@ -73,5 +78,11 @@ extension Wistia.Media {
                 return nil
             }
         })
+    }
+    
+    internal var captions: Resource<[Wistia.CaptionFile]> {
+        return try! Resource<[Wistia.CaptionFile]>(
+            url: URL(route: .captions(hashedId)),
+            parseElement: Wistia.CaptionFile.init)
     }
 }

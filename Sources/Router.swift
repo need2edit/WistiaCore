@@ -19,6 +19,8 @@ extension Wistia {
         case media(String)
         case medias
         
+        case captions(String)
+        
         case account
         
         public var path: String {
@@ -30,6 +32,7 @@ extension Wistia {
                     
                 case .project(let id): return "/projects/\(id).json"
                 case .media(let id): return "/medias/\(id).json"
+                case .captions(let id): return "/medias/\(id)/captions.json"
                     
                 case .account: return "/account.json"
                 

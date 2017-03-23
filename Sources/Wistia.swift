@@ -3,6 +3,7 @@ public typealias MediaListHandler = ([Wistia.Media]) -> ()
 public typealias AccountHandler = (Wistia.Account) -> ()
 public typealias ProjectHandler = (Wistia.Project) -> ()
 public typealias MediaHandler = (Wistia.Media) -> ()
+public typealias CaptionsListHandler = ([Wistia.CaptionFile]) -> ()
 
 public struct Wistia {
 
@@ -33,6 +34,10 @@ public struct Wistia {
         load(resource: Project.show(hashedId: hashedId), complete: complete)
     }
     
+    public func showMedia(forHashedId hashedId: String, complete: @escaping MediaHandler) {
+        load(resource: Media.show(hashedId: hashedId), complete: complete)
+    }
+    
     public func listMedias(forProject project: Project, complete: @escaping MediaListHandler) {
         load(resource: project.details) { project in
             complete(project.medias ?? [])
@@ -41,6 +46,10 @@ public struct Wistia {
     
     public func listMedias(complete: @escaping MediaListHandler) {
         load(resource: Media.list, complete: complete)
+    }
+    
+    public func listCaptions(forMedia media: Media, complete: @escaping CaptionsListHandler) {
+        load(resource: media.captions, complete: complete)
     }
     
     public func showAccountDetails(complete: @escaping AccountHandler) {
